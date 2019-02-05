@@ -1,0 +1,3 @@
+[submodule "lib/JuliaBolt"]
+	path = lib/JuliaBolt
+	url = https://github.com/virtualgraham/JuliaBolt.git
