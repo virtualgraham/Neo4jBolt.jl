@@ -16,7 +16,7 @@ function setup()
     auth_token = ("neo4j", "password")
     bolt_uri = "bolt://localhost:7687"
 
-    return TestCase(Driver(bolt_uri, auth=auth_token))
+    return TestCase(Neo4jBoltDriver(bolt_uri, auth=auth_token))
 end
 
 

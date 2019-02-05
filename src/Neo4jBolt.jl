@@ -10,7 +10,7 @@ using .JuliaBolt
 export fix_parameters, record_data, record_values, record_items, index, value, consume, last_bookmark,
     custom_auth, basic_auth, kerberos_auth, session, single, begin_transaction, run_transaction, commit, 
     rollback, write_transaction, read_transaction, summary, start_node, end_node, READ_ACCESS, WRITE_ACCESS
-export Statement, Graph, Node, Relationship, PackStreamHydrator, Driver, UnitOfWork, Path, CartesianPoint,
+export Statement, Graph, Node, Relationship, PackStreamHydrator, Neo4jBoltDriver, UnitOfWork, Path, CartesianPoint,
     WGS84Point, DateWrapper, TimeWrapper, DateTimeWrapper, DurationWrapper
 
 include("errors.jl")
@@ -59,11 +59,11 @@ end
 
 
 #####################################
-#               Driver              #
+#         Neo4jBoltDriver           #
 #####################################
 using Sockets
 
-mutable struct Driver
+mutable struct Neo4jBoltDriver
     uri_sceme::String
     pool::ConnectionPool
     closed::Bool
@@ -72,9 +72,9 @@ mutable struct Driver
     security_plan
     encrypted
 
-    function Driver(uri; config...)
+    function Neo4jBoltDriver(uri; config...)
 
-        address = from_uri(uri, JuliaBolt.DEFAULT_PORT)
+        address = JuliaBolt.from_uri(uri, JuliaBolt.DEFAULT_PORT)
 
         if address.scheme != "bolt"
             throw(ErrorException("Neo4jBolt driver requires bolt URI scheme, $(address.scheme) given"))
@@ -106,7 +106,7 @@ end
 
 # Driver -------------------------- #
 
-function Base.close(driver::Driver)
+function Base.close(driver::Neo4jBoltDriver)
     if !driver.closed
         driver.closed = true
         if driver.pool != nothing
@@ -117,7 +117,7 @@ end
 
 # Driver -------------------------- #
 
-function session(driver::Driver, access_mode=nothing; parameters...)
+function session(driver::Neo4jBoltDriver, access_mode=nothing; parameters...)
     aquierer = function(access_mode)
         return JuliaBolt.acquire(driver.pool, access_mode)
     end
