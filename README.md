@@ -22,7 +22,7 @@ using Neo4jBolt
       
 driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
 
-session(tc.driver) do sess
+session(driver) do sess
     result = run(sess, "UNWIND(RANGE(1, 10)) AS z RETURN z")
     for record in result
         println(record["z"])
@@ -38,7 +38,7 @@ using Neo4jBolt
       
 driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
 
-session(tc.driver) do sess
+session(driver) do sess
     begin_transaction(sess) do tx
         result = run(tx, "CREATE (a:Person {name:'Alice'}) RETURN a")
         v = value(single(result))
