@@ -1,10 +1,6 @@
 using Test
 
-
-include("../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
-
+using Neo4jBolt
 
 # Unit Tests
 println("Unit Tests")
