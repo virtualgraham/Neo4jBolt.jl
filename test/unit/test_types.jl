@@ -1,8 +1,4 @@
-using Test
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
+using Dates
 
 @testset "NodeTestCase" begin
     
@@ -193,13 +189,9 @@ end
 end
 
 @testset "TemporalHydrationTestCase" begin
-    
-    using Dates
-    
-    hydrant = PackStreamHydrator(2)
-    
+     
     @testset "test_can_hydrate_julia_date_time_structure" begin
-        ENV["NEO4J_USE_JULIA_DATES"] = true
+        hydrant = PackStreamHydrator(2)
         structure = Neo4jBolt.Structure(UInt8('d'), [1539344261, 474716862])
         dt, = Neo4jBolt.hydrate(hydrant, [structure])
         @test Dates.year(dt) == 2018
@@ -212,7 +204,7 @@ end
     end
 
     @testset "test_can_hydrate_wrapper_date_time_structure" begin
-        ENV["NEO4J_USE_JULIA_DATES"] = false
+        hydrant = PackStreamHydrator(2, false)
         structure = Neo4jBolt.Structure(UInt8('d'), [1539344261, 474716862])
         dt, = Neo4jBolt.hydrate(hydrant, [structure])
         dt.seconds == 1539344261

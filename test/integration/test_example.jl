@@ -1,8 +1,3 @@
-using Test
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
 @testset "ExampleTestCase" begin
 
     @testset "test_example" begin

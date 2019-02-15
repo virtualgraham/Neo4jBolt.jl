@@ -1,9 +1,3 @@
-using Test
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
-
 @testset "AuthTokenTestCase" begin
     
     @testset "test_should_generate_kerberos_auth_token_correctly" begin

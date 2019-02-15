@@ -1,27 +1,4 @@
-using Test
-using Sockets
 using UUIDs
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
-
-struct TestCase
-    driver
-end
-
-function setup()
-    auth_token = ("neo4j", "password")
-    bolt_uri = "bolt://localhost:7687"
-
-    return TestCase(Neo4jBoltDriver(bolt_uri, auth=auth_token))
-end
-
-
-function teardown(driver)
-    close(driver)
-end
-
 
 @testset "AutoCommitTransactionTestCase" begin
     tc = setup()

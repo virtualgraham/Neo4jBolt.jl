@@ -9,7 +9,8 @@ using .JuliaBolt
 
 export fix_parameters, record_data, record_values, record_items, index, value, consume, last_bookmark,
     custom_auth, basic_auth, kerberos_auth, session, single, begin_transaction, run_transaction, commit, 
-    rollback, write_transaction, read_transaction, summary, start_node, end_node, READ_ACCESS, WRITE_ACCESS
+    rollback, write_transaction, read_transaction, summary, start_node, end_node, put_node, put_relationship, 
+    READ_ACCESS, WRITE_ACCESS
 export Statement, Graph, Node, Relationship, PackStreamHydrator, Neo4jBoltDriver, UnitOfWork, Path, CartesianPoint,
     WGS84Point, DateWrapper, TimeWrapper, DateTimeWrapper, DurationWrapper
 

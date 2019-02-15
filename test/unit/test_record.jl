@@ -1,8 +1,4 @@
-using Test
 using OrderedCollections
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
 
 # OrderedDict is used in place of a Python Neo4j's Record Object
 
@@ -95,31 +91,31 @@ using .Neo4jBolt
 
     @testset "test_record_index" begin
         r = OrderedDict(zip(["name", "age", "married"], ["Alice", 33, true]))
-        @test record_index(r, "name") == 1
-        @test record_index(r, "age") == 2
-        @test record_index(r, "married") == 3
-        @test_throws ErrorException record_index(r, "shoe size")    
-        @test record_index(r, 1) == 1
-        @test record_index(r, 2) == 2
-        @test record_index(r, 3) == 3
-        @test_throws ErrorException record_index(r, 4) 
-        @test_throws MethodError record_index(r, nothing) 
+        @test index(r, "name") == 1
+        @test index(r, "age") == 2
+        @test index(r, "married") == 3
+        @test_throws ErrorException index(r, "shoe size")    
+        @test index(r, 1) == 1
+        @test index(r, 2) == 2
+        @test index(r, 3) == 3
+        @test_throws ErrorException index(r, 4) 
+        @test_throws MethodError index(r, nothing) 
     end
 
     
     @testset "test_record_value" begin
         r = OrderedDict(zip(["name", "age", "married"], ["Alice", 33, true]))
-        @test record_value(r) == "Alice"
-        @test record_value(r, "name") == "Alice"
-        @test record_value(r, "age") == 33
-        @test record_value(r, "shoe size") == nothing
-        @test record_value(r, "shoe size", 6) == 6
-        @test record_value(r, 1) == "Alice"
-        @test record_value(r, 2) == 33
-        @test record_value(r, 3) == true
-        @test record_value(r, 4) == nothing
-        @test record_value(r, 4, 6) == 6
-        @test_throws MethodError record_index(r, nothing) 
+        @test value(r) == "Alice"
+        @test value(r, "name") == "Alice"
+        @test value(r, "age") == 33
+        @test value(r, "shoe size") == nothing
+        @test value(r, "shoe size", 6) == 6
+        @test value(r, 1) == "Alice"
+        @test value(r, 2) == 33
+        @test value(r, 3) == true
+        @test value(r, 4) == nothing
+        @test value(r, 4, 6) == 6
+        @test_throws MethodError index(r, nothing) 
     end
 
     @testset "test_record_value" begin

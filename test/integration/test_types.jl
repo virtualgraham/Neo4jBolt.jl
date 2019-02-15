@@ -1,29 +1,5 @@
-using Test
-using Sockets
 using Dates
 using TimeZones
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
-
-struct TestCase
-    driver
-end
-
-
-function setup()
-    auth_token = ("neo4j", "password")
-    bolt_uri = "bolt://localhost:7687"
-
-    return TestCase(Neo4jBoltDriver(bolt_uri, auth=auth_token))
-end
-
-
-function teardown(driver)
-    close(driver)
-end
-
 
 function run_and_rollback(tx, args, kwargs)
     result = run(tx, args[1]; kwargs...)
@@ -31,7 +7,6 @@ function run_and_rollback(tx, args, kwargs)
     tx.success = false
     return v
 end
-
 
 @testset "CoreTypeOutputTestCase" begin
     tc = setup()

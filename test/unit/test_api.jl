@@ -1,8 +1,3 @@
-using Test
-
-include("../../src/Neo4jBolt.jl")
-using .Neo4jBolt
-
 function dehydrated_value(value)
     return fix_parameters(Dict("_" => value), 1, supports_bytes=true)["_"]
 end
