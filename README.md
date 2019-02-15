@@ -1,8 +1,56 @@
 # Neo4j Bolt Driver for Julia
 
-Neo4jBolt.jl is a Julia port of the official [Neo4j driver for Python](https://github.com/neo4j/neo4j-python-driver). It supports Neo4j 3.0 and above using the fast binary Bolt protocal. Currently the features that have not yet been proted are encrypted SSL connections and cluster routing.
+Neo4j is the world’s leading Graph Database. It is a high performance graph store with all the features expected of a mature and robust database, like a friendly query language and ACID transactions. The programmer works with a flexible network structure of nodes and relationships rather than static tables — yet enjoys all the benefits of enterprise-quality database. For many applications, Neo4j offers orders of magnitude performance benefits compared to relational DBs.
 
-## Quick Example
+Neo4jBolt.jl is a Julia port of the official [Neo4j Driver](https://github.com/neo4j/neo4j-python-driver). It supports Neo4j 3.0 and above using the fast binary Bolt protocal. 
+
+This driver does not support HTTP REST based communications. For a Neo4j Julia driver that supports HTTP and REST, see [Neo4j.jl](https://github.com/glesica/Neo4j.jl). Additionally, encrypted SSL connections and cluster routing have not yet been implemented in this version.
+
+## Getting Started with Neo4j
+
+* [Introduction (The Neo4j Operations Manual v3.5)](https://neo4j.com/docs/operations-manual/current/introduction/)
+* [Installation (The Neo4j Operations Manual v3.5)](https://neo4j.com/docs/operations-manual/current/installation/)
+
+## Quick Examples
+
+Here are a few usage examples. For a more extensive collection of examples see the integration tests in the test/integration directory of this repository.
+
+### Run Cypher Statement
+
+```
+using Neo4jBolt  
+      
+driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
+
+session(tc.driver) do sess
+    result = run(sess, "UNWIND(RANGE(1, 10)) AS z RETURN z")
+    for record in result
+        println(record["z"])
+    end
+end
+```
+
+
+### Run Simple Transaction
+
+```
+using Neo4jBolt  
+      
+driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
+
+session(tc.driver) do sess
+    begin_transaction(sess) do tx
+        result = run(tx, "CREATE (a:Person {name:'Alice'}) RETURN a")
+        v = value(single(result))
+        println(v.labels == Set(["Person"]))
+        println(v.properties == Dict("name"=>"Alice"))
+    end
+end
+```
+
+
+### Unit of Work transactions
+
 ```
 using Neo4jBolt  
       
