@@ -81,3 +81,23 @@ end
 ### Dates and Times
 
 By default Neo4j Date, Time and Duration types are returned as Julia Date, Time, DateTime, ZonedDateTime or Dates.CompoundPeriod types where appropriate. However, Julia Dates and Neo4j Dates are slightly incompatible. Specifically, Julia DateTimes do not support nanosecond time. Julia Times do not support TimeZones. Also Julia's TimeZone system is not entirely compatible with Neo4j's. As a workaround to these incompatibilities, you can choose to use the provided DateWrapper, TimeWrapper, DateTimeWrapper and DurationWrapper types instead. These wrap Neo4j's native representations in Julia struct types. To return these wrapper types from a query set `use_julia_dates=false` as a keyword argument to the `run` method.
+
+```
+# Here a ZonedDateTime is returned but the nanosecods are truncated
+
+session(tc.driver) do sess
+      result = run(sess,"RETURN datetime('1976-06-13T12:34:56.789012345[Europe/London]')")
+      v = value(single(result))
+      @test isa(v, ZonedDateTime)
+      @test v == ZonedDateTime(DateTime(1976, 6, 13, 12, 34, 56, 789), tz"Europe/London")
+end
+
+# Here a DateTimeWrapper is returned and nanosecods are not truncated
+
+session(tc.driver) do sess
+      result = run(sess, "RETURN datetime('1976-06-13T12:34:56.789012345[Europe/London]')", use_julia_dates=false)
+      v = value(single(result))
+      @test isa(v, DateTimeWrapper)
+      @test v == DateTimeWrapper(1976, 6, 13, 12, 34, 56, 789012345, timezone="Europe/London")
+end
+```
