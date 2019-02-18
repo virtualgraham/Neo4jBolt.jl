@@ -75,3 +75,9 @@ session(driver) do sess
     read_transaction(sess, print_friends, "Arthur")
 end
 ```
+
+## Implementation Details
+
+### Dates and Times
+
+By default Neo4j Date, Time and Duration types are returned as Julia Date, Time, DateTime, ZonedDateTime or Dates.CompoundPeriod types where appropriate. However, Julia Dates and Neo4j Dates are slightly incompatiple. Specifically, Julia DateTimes do not support nanosecond time. Julia Times do not support TimeZones. Also Julia's TimeZone system is not entirely compatible with Neo4j's. As a workaround to these incompatibilities, you can choose to return Types that wrap Neo4j's native representations by setting `use_julia_dates=false` as a keyword argument to the `run` method.
