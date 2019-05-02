@@ -1,10 +1,10 @@
 # Neo4j Bolt Driver for Julia
 
-Neo4j is the world’s leading Graph Database. It is a high performance graph store with all the features expected of a mature and robust database, like a friendly query language and ACID transactions. The programmer works with a flexible network structure of nodes and relationships rather than static tables — yet enjoys all the benefits of enterprise-quality database. For many applications, Neo4j offers orders of magnitude performance benefits compared to relational DBs.
+Neo4jBolt.jl is a direct port of the official [Neo4j Driver](https://github.com/neo4j/neo4j-python-driver) to Julia. It supports Neo4j 3.0 and above using the fast binary Bolt protocal. The Bolt driver is designed to be much faster than the HTTP REST based driver. For a Neo4j Julia driver that supports HTTP and REST, see [Neo4j.jl](https://github.com/glesica/Neo4j.jl). 
 
-Neo4jBolt.jl is a Julia port of the official [Neo4j Driver](https://github.com/neo4j/neo4j-python-driver). It supports Neo4j 3.0 and above using the fast binary Bolt protocal. 
+## Todo
 
-This driver does not support HTTP REST based communications. For a Neo4j Julia driver that supports HTTP and REST, see [Neo4j.jl](https://github.com/glesica/Neo4j.jl). Additionally, encrypted SSL connections and cluster routing have not yet been implemented in this version.
+Encrypted SSL connections and cluster routing have not yet been implemented in this version.
 
 ## Getting Started with Neo4j
 
