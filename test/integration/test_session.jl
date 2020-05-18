@@ -3,6 +3,10 @@ using UUIDs
 @testset "AutoCommitTransactionTestCase" begin
     tc = setup()
     
+    sess = session(tc.driver)
+    result = run(sess, "RETURN 1 AS n")
+    close(sess)
+
     @testset "test_can_run_simple_statement" begin
         sess = session(tc.driver)
         result = run(sess, "RETURN 1 AS n")
@@ -20,7 +24,7 @@ using UUIDs
     @testset "test_can_run_simple_statement_with_params" begin
         sess = session(tc.driver)
         count = 0
-        result = run(sess, "RETURN {x} AS n", Dict("x"=>Dict("abc"=>["d","e","f"])))
+        result = run(sess, "RETURN \$x AS n", Dict("x"=>Dict("abc"=>["d","e","f"])))
         for record in result
             @test value(record, 1) == Dict("abc"=>["d","e","f"])
             @test record["n"] == Dict("abc"=>["d","e","f"])
@@ -329,11 +333,11 @@ end
             node_id = value(record, 1)
             @test isa(node_id, Integer)
 
-            run(tx, "MATCH (a) WHERE id(a) = {n} SET a.foo = {foo}", Dict("n"=>node_id, "foo"=>"bar"))
+            run(tx, "MATCH (a) WHERE id(a) = \$n SET a.foo = \$foo", Dict("n"=>node_id, "foo"=>"bar"))
 
             commit(tx)
 
-            result = run(sess, "MATCH (a) WHERE id(a) = {n} RETURN a.foo", Dict("n"=>node_id))
+            result = run(sess, "MATCH (a) WHERE id(a) = \$n RETURN a.foo", Dict("n"=>node_id))
             record = [r for r in result][1]
             v = value(record, 1)
 
@@ -350,11 +354,11 @@ end
             node_id = value(record, 1)
             @test isa(node_id, Integer)
 
-            run(tx, "MATCH (a) WHERE id(a) = {n} SET a.foo = {foo}", Dict("n"=>node_id, "foo"=>"bar"))
+            run(tx, "MATCH (a) WHERE id(a) = \$n SET a.foo = \$foo", Dict("n"=>node_id, "foo"=>"bar"))
 
             rollback(tx)
 
-            result = run(sess, "MATCH (a) WHERE id(a) = {n} RETURN a.foo", Dict("n"=>node_id))
+            result = run(sess, "MATCH (a) WHERE id(a) = \$n RETURN a.foo", Dict("n"=>node_id))
             @test length([r for r in result]) == 0
         end
     end
