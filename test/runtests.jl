@@ -1,6 +1,6 @@
 using Test
 
-using .Neo4jBolt
+using Neo4jBolt
 
 # Unit Tests
 println("Unit Tests")
@@ -34,7 +34,7 @@ function teardown(driver)
 end
 
 
-#include("integration/test_example.jl")
-#include("integration/test_result.jl")
+include("integration/test_example.jl")
+include("integration/test_result.jl")
 include("integration/test_session.jl")
-#include("integration/test_types.jl")
+include("integration/test_types.jl")

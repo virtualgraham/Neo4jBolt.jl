@@ -3,10 +3,6 @@ using UUIDs
 @testset "AutoCommitTransactionTestCase" begin
     tc = setup()
     
-    sess = session(tc.driver)
-    result = run(sess, "RETURN 1 AS n")
-    close(sess)
-
     @testset "test_can_run_simple_statement" begin
         sess = session(tc.driver)
         result = run(sess, "RETURN 1 AS n")
