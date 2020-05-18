@@ -1,6 +1,6 @@
 # Neo4j Bolt Driver for Julia
 
-Neo4jBolt.jl is a Julia port of the official [Neo4j Driver (1.7)](https://github.com/neo4j/neo4j-python-driver/tree/1.7). It supports Neo4j 3.0 and above using the fast binary Bolt protocal. The Bolt driver is designed to be much faster than the HTTP REST based driver. For a Neo4j Julia driver that supports HTTP and REST, see [Neo4j.jl](https://github.com/glesica/Neo4j.jl). 
+Neo4jBolt.jl is a Julia port of the official [Neo4j Driver (1.7)](https://github.com/neo4j/neo4j-python-driver/tree/1.7). It supports Neo4j 3.0 and above using the fast binary Bolt protocal. The Bolt driver is designed to be much faster than the HTTP REST based driver.
 
 ## Todo
 
