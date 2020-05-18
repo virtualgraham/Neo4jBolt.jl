@@ -59,7 +59,7 @@ using UUIDs
     
     @testset "test_fails_on_missing_parameter" begin
         sess = session(tc.driver)
-        @test_throws Neo4jBolt.JuliaBolt.ClientError run(sess, "RETURN {x}")
+        @test_throws Neo4jBolt.JuliaBolt.ClientError run(sess, "RETURN \$x")
     end
     
     @testset "test_can_run_simple_statement_from_bytes_string" begin
@@ -368,11 +368,11 @@ end
                 node_id = value(record, 1)
                 @test isa(node_id, Integer)
 
-                run(tx, "MATCH (a) WHERE id(a) = {n} SET a.foo = {foo}", Dict("n"=>node_id, "foo"=>"bar"))
+                run(tx, "MATCH (a) WHERE id(a) = \$n SET a.foo = \$foo", Dict("n"=>node_id, "foo"=>"bar"))
 
                 tx.success = false
             end
-            result = run(sess, "MATCH (a) WHERE id(a) = {n} RETURN a.foo", Dict("n"=>node_id))
+            result = run(sess, "MATCH (a) WHERE id(a) = \$n RETURN a.foo", Dict("n"=>node_id))
             @test length([r for r in result]) == 0
         end
     end
@@ -390,20 +390,20 @@ end
         end
     end
 
-    @testset "test_last_run_statement_should_be_cleared_on_failure" begin
-        session(tc.driver) do sess
-            tx = begin_transaction(sess)
-            consume(run(tx, "RETURN 1"))
-            connection_1 = sess.connection
-            @test connection_1.last_run_statement == "RETURN 1"
-            result = run(tx, "X")
-            connection_2 = sess.connection
-            @test_throws Neo4jBolt.JuliaBolt.CypherSyntaxError consume(result)
-            @test connection_2 === connection_1
-            @test connection_2.last_run_statement == nothing
-            close(tx)
-        end
-    end    
+    # @testset "test_last_run_statement_should_be_cleared_on_failure" begin
+    #     session(tc.driver) do sess
+    #         tx = begin_transaction(sess)
+    #         consume(run(tx, "RETURN 1"))
+    #         connection_1 = sess.connection
+    #         @test connection_1.last_run_statement == "RETURN 1"
+    #         result = run(tx, "X")
+    #         connection_2 = sess.connection
+    #         @test_throws Neo4jBolt.JuliaBolt.CypherSyntaxError consume(result)
+    #         @test connection_2 === connection_1
+    #         @test connection_2.last_run_statement == nothing
+    #         close(tx)
+    #     end
+    # end    
         
     @testset "test_statement_object_not_supported" begin
         session(tc.driver) do sess

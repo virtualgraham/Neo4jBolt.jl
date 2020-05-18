@@ -156,7 +156,7 @@ end
 
 
 function dehydrate_datetime(value::ZonedDateTime)
-    d = TimeZones.localtime(value)
+    d = DateTime(value, Local)
     millisecond = (d-DateTime(1970,1,1)).value # miliseconds
     seconds = Integer(floor(millisecond/1000.0))
     nanoseconds = (millisecond % 1000) * 1000000

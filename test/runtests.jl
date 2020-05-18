@@ -1,6 +1,6 @@
 using Test
 
-using Neo4jBolt
+using .Neo4jBolt
 
 # Unit Tests
 println("Unit Tests")
