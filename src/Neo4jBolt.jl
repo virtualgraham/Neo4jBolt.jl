@@ -2,8 +2,7 @@ module Neo4jBolt
 
 using OrderedCollections
 
-
-include("../lib/JuliaBolt/src/JuliaBolt.jl")
+include("bolt/JuliaBolt.jl")
 
 using .JuliaBolt
 
