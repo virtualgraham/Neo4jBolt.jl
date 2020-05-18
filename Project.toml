@@ -1,6 +1,6 @@
 name = "Neo4jBolt"
 uuid = "e2e57520-66ee-4e8f-b3d8-5f34fcb1446a"
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 TimeZones = "f269a46b-ccf7-5d73-abea-4c690281aa53"
