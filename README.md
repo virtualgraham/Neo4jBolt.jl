@@ -17,7 +17,7 @@ Here are a few usage examples. For a more extensive collection of examples see t
 
 ### Run Cypher Statement
 
-```
+```julia
 using Neo4jBolt  
       
 driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
@@ -33,7 +33,7 @@ end
 
 ### Run Simple Transaction
 
-```
+```julia
 using Neo4jBolt  
       
 driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
@@ -51,7 +51,7 @@ end
 
 ### Unit of Work transactions
 
-```
+```julia
 using Neo4jBolt  
       
 driver = Neo4jBoltDriver("bolt://localhost:7687", auth=("neo4j", "password"))
@@ -82,7 +82,7 @@ end
 
 By default Neo4j Date, Time and Duration types are returned as Julia Date, Time, DateTime, ZonedDateTime or Dates.CompoundPeriod types where appropriate. However, Julia Dates and Neo4j Dates are slightly incompatible. Specifically, Julia DateTimes do not support nanosecond time. Julia Times do not support TimeZones. Also Julia's TimeZone system is not entirely compatible with Neo4j's. As a workaround to these incompatibilities, you can choose to use the provided DateWrapper, TimeWrapper, DateTimeWrapper and DurationWrapper types instead. These wrap Neo4j's native representations in Julia struct types. To return these wrapper types from a query set `use_julia_dates=false` as a keyword argument to the `run` method.
 
-```
+```julia
 # Here a ZonedDateTime is returned but the nanosecods are truncated
 
 session(tc.driver) do sess
