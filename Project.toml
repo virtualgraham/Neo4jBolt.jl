@@ -1,5 +1,5 @@
 name = "Neo4jBolt"
-uuid = "98c1fac1-32c0-42e2-a46a-550f8f8552df"
+uuid = "6bf848c2-a04c-470f-9a4d-5a21d02c3e16"
 version = "1.0.1"
 
 [deps]
