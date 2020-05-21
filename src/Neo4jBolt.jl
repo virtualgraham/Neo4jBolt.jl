@@ -107,9 +107,7 @@ end
 # Driver -------------------------- #
 
 function Base.show(io::IO, driver::Neo4jBoltDriver)
-    println(
-        "Neo4jBoltDriver(address: $(driver.address))"
-    )
+    print(io, "Neo4jBoltDriver(address: $(driver.address))")
 end
 
 # Driver -------------------------- #
@@ -167,9 +165,7 @@ mutable struct Statement
 end
 
 function Base.show(io::IO, statement::Statement)
-    println(
-        "Statement(text: $(statement.text))"
-    )
+    print(io, "Statement(text: $(statement.text))")
 end
 
 # Statement ----------------------- #
@@ -209,9 +205,7 @@ mutable struct Session
 end
 
 function Base.show(io::IO, session::Session)
-    println(
-        "Session()"
-    )
+    print(io,  "Session()")
 end
 
 
@@ -584,9 +578,7 @@ struct UnitOfWork
 end
 
 function Base.show(io::IO, unit_of_work::UnitOfWork)
-    println(
-        "UnitOfWork()"
-    )
+    print(io,  "UnitOfWork()")
 end
 
 function run_transaction(session::Session, access_mode::String, f::Function, args...; kwargs...)
@@ -700,9 +692,7 @@ mutable struct Transaction
 end
 
 function Base.show(io::IO, transaction::Transaction)
-    println(
-        "Transaction()"
-    )
+    print(io,  "Transaction()")
 end
 
 # Transaction --------------------- #
@@ -812,9 +802,7 @@ mutable struct StatementResult
 end
 
 function Base.show(io::IO, statement_restult::StatementResult)
-    println(
-        "StatementResult()"
-    )
+    print(io,  "StatementResult()")
 end
 
 # Statement Result ---------------- #
@@ -1040,9 +1028,7 @@ mutable struct BoltStatementResultSummary
 end
 
 function Base.show(io::IO, statement_restult::BoltStatementResultSummary)
-    println(
-        "StatementResult()"
-    )
+    print(io,  "BoltStatementResultSummary()")
 end
 
 struct Plan

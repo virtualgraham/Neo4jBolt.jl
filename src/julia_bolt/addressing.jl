@@ -7,9 +7,7 @@ struct Address
 end
 
 function Base.show(io::IO, address::Address)
-    println(
-        "Address(scheme: $(address.scheme), host: $(address.host) port: $(address.port))"
-    )
+    print(io,  "Address(scheme: $(address.scheme), host: $(address.host) port: $(address.port))")
 end
 
 function from_uri(uri::String, default_port::Integer=0)
