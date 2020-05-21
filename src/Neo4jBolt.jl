@@ -106,6 +106,14 @@ end
 
 # Driver -------------------------- #
 
+function Base.show(io::IO, driver::Neo4jBoltDriver)
+    println(
+        "Neo4jBoltDriver(address: $(driver.address))"
+    )
+end
+
+# Driver -------------------------- #
+
 function Base.close(driver::Neo4jBoltDriver)
     if !driver.closed
         driver.closed = true
@@ -158,6 +166,12 @@ mutable struct Statement
     end
 end
 
+function Base.show(io::IO, statement::Statement)
+    println(
+        "Statement(text: $(statement.text))"
+    )
+end
+
 # Statement ----------------------- #
 # # # # # # # # # # # # # # # # # # #
 
@@ -193,6 +207,13 @@ mutable struct Session
         return new(acquirer, access_mode, bookmarks_in, nothing, max_retry_time, false, nothing, nothing, nothing, nothing)
     end
 end
+
+function Base.show(io::IO, session::Session)
+    println(
+        "Session()"
+    )
+end
+
 
 # Session ------------------------- #
 
@@ -562,6 +583,11 @@ struct UnitOfWork
     timeout::Union{Number, Nothing}
 end
 
+function Base.show(io::IO, unit_of_work::UnitOfWork)
+    println(
+        "UnitOfWork()"
+    )
+end
 
 function run_transaction(session::Session, access_mode::String, f::Function, args...; kwargs...)
     return run_transaction(session, access_mode, UnitOfWork(f, nothing, nothing), args...; kwargs...)
@@ -673,6 +699,12 @@ mutable struct Transaction
     end
 end
 
+function Base.show(io::IO, transaction::Transaction)
+    println(
+        "Transaction()"
+    )
+end
+
 # Transaction --------------------- #
 
 function Base.run(transaction::Transaction, statement, parameters=Dict(); kwparameters...)
@@ -777,6 +809,12 @@ mutable struct StatementResult
     summary
 
     StatementResult(session, hydrant, metadata) = new(session, hydrant, metadata, [], nothing)
+end
+
+function Base.show(io::IO, statement_restult::StatementResult)
+    println(
+        "StatementResult()"
+    )
 end
 
 # Statement Result ---------------- #
@@ -1001,6 +1039,11 @@ mutable struct BoltStatementResultSummary
     end
 end
 
+function Base.show(io::IO, statement_restult::BoltStatementResultSummary)
+    println(
+        "StatementResult()"
+    )
+end
 
 struct Plan
     operator_type

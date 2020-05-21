@@ -6,6 +6,12 @@ struct Address
     port::Integer
 end
 
+function Base.show(io::IO, address::Address)
+    println(
+        "Address(scheme: $(address.scheme), host: $(address.host) port: $(address.port))"
+    )
+end
+
 function from_uri(uri::String, default_port::Integer=0)
     parsed = URI(uri)
     return Address(parsed.scheme, parsed.host, if parsed.port == 0 default_port else parsed.port end)
