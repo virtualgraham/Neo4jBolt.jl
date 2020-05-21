@@ -26,8 +26,6 @@ Original notices:
 
 module JuliaBolt
 
-using Logging
-
 using Sockets
 using BufferedStreams
 
