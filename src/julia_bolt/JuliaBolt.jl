@@ -97,7 +97,7 @@ end
 mutable struct ServerInfo
     address::Tuple{IPAddr, UInt16}
     protocol_version
-    metadata::Dict{String, String}
+    metadata::Dict{String, Any}
 
     ServerInfo(address, protocol_version) = new(address, protocol_version, Dict())
 end
